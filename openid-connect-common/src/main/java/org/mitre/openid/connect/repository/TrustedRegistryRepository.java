@@ -19,6 +19,7 @@ package org.mitre.openid.connect.repository;
 import java.util.Collection;
 
 import org.mitre.openid.connect.model.TrustedRegistry;
+import org.springframework.data.repository.Repository;
 
 /**
  * ApprovedSite repository interface
@@ -26,7 +27,7 @@ import org.mitre.openid.connect.model.TrustedRegistry;
  * @author Josh Mandel
  *
  */
-public interface TrustedRegistryRepository {
+public interface TrustedRegistryRepository extends Repository<TrustedRegistry, String> {
 
 	/**
 	 * Return a collection of all TrustedRegistries managed by this repository
