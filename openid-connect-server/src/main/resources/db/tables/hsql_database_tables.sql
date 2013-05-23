@@ -178,6 +178,7 @@ CREATE TABLE IF NOT EXISTS system_scope (
 	icon VARCHAR(256),
 	allow_dyn_reg BOOLEAN NOT NULL DEFAULT false,
 	default_scope BOOLEAN NOT NULL DEFAULT false,
+	structured BOOLEAN NOT NULL DEFAULT false,
 	UNIQUE (scope)
 );
 
@@ -213,4 +214,8 @@ CREATE TABLE IF NOT EXISTS whitelisted_site (
 CREATE TABLE IF NOT EXISTS whitelisted_site_scope (
 	owner_id BIGINT,
 	scope VARCHAR(256)
+);
+
+CREATE TABLE IF NOT EXISTS trusted_registry  (
+	uri VARCHAR(256)
 );

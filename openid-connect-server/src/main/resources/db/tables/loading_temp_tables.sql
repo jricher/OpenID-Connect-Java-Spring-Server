@@ -70,5 +70,10 @@ CREATE TEMPORARY TABLE IF NOT EXISTS system_scope_TEMP (
 	description VARCHAR(4096),
 	icon VARCHAR(256),
 	allow_dyn_reg BOOLEAN,
-	default_scope BOOLEAN
+	default_scope BOOLEAN,
+	structured BOOLEAN
+);
+
+CREATE TEMPORARY TABLE IF NOT EXISTS trusted_registry_TEMP (
+	uri VARCHAR(256)
 );

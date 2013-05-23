@@ -10,10 +10,12 @@ START TRANSACTION;
 -- Insert user information into the temporary tables. To add users to the HSQL database, edit things here.
 -- 
 
+INSERT INTO trusted_registry_TEMP (uri) VALUES
+  ('http://blue-button.github.com/static-registry-example');
+ 
 INSERT INTO users_TEMP (username, password, enabled) VALUES
   ('admin','password',true),
   ('user','password',true);
-
 
 INSERT INTO authorities_TEMP (username, authority) VALUES
   ('admin','ROLE_ADMIN'),
@@ -48,7 +50,12 @@ MERGE INTO user_info
   WHEN NOT MATCHED THEN 
     INSERT (sub, preferred_username, name, email, email_verified) VALUES (vals.sub, vals.preferred_username, vals.name, vals.email, vals.email_verified);
 
-    
+MERGE INTO trusted_registry
+  USING (SELECT uri FROM trusted_registry_TEMP) AS vals(uri)
+  ON vals.uri = trusted_registry.uri
+  WHEN NOT MATCHED THEN
+    INSERT (uri) VALUES(vals.uri);
+
 -- 
 -- Close the transaction and turn autocommit back on
 -- 

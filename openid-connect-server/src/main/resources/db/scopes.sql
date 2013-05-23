@@ -10,13 +10,13 @@ START TRANSACTION;
 -- Insert scope information into the temporary tables.
 -- 
 
-INSERT INTO system_scope_TEMP (scope, description, icon, allow_dyn_reg, default_scope) VALUES
-  ('openid', 'log in using your identity', 'user', true, true),
-  ('profile', 'basic profile information', 'list-alt', true, true),
-  ('email', 'email address', 'envelope', true, true),
-  ('address', 'physical address', 'home', true, true),
-  ('phone', 'telephone number', 'bell', true, true),
-  ('offline_access', 'offline access', 'time', true, true);
+INSERT INTO system_scope_TEMP (scope, description, icon, allow_dyn_reg, default_scope, structured) VALUES
+  ('openid', 'log in using your identity', 'user', true, true, false),
+  ('profile', 'basic profile information', 'list-alt', true, true, false),
+  ('email', 'email address', 'envelope', true, true, false),
+  ('address', 'physical address', 'home', true, true, false),
+  ('phone', 'telephone number', 'bell', true, true, false),
+  ('offline_access', 'offline access', 'time', true, true, false);
   
 
 --
@@ -24,10 +24,10 @@ INSERT INTO system_scope_TEMP (scope, description, icon, allow_dyn_reg, default_
 --
 
 MERGE INTO system_scope
-	USING (SELECT scope, description, icon, allow_dyn_reg, default_scope FROM system_scope_TEMP) AS vals(scope, description, icon, allow_dyn_reg, default_scope)
+	USING (SELECT scope, description, icon, allow_dyn_reg, default_scope, structured FROM system_scope_TEMP) AS vals(scope, description, icon, allow_dyn_reg, default_scope, structured)
 	ON vals.scope = system_scope.scope
 	WHEN NOT MATCHED THEN
-	  INSERT (scope, description, icon, allow_dyn_reg, default_scope) VALUES(vals.scope, vals.description, vals.icon, vals.allow_dyn_reg, vals.default_scope);
+	  INSERT (scope, description, icon, allow_dyn_reg, default_scope, structured) VALUES(vals.scope, vals.description, vals.icon, vals.allow_dyn_reg, vals.default_scope, structured);
 
 COMMIT;
 
