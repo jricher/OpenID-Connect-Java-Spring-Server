@@ -21,6 +21,7 @@ package org.mitre.oauth2.service.impl;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.logging.Logger;
 
 import org.mitre.oauth2.model.SystemScope;
 import org.mitre.oauth2.repository.SystemScopeRepository;
@@ -31,7 +32,9 @@ import org.springframework.stereotype.Service;
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
+import com.google.common.base.Splitter;
 import com.google.common.collect.Collections2;
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Sets;
 
 /**
@@ -167,6 +170,24 @@ public class DefaultSystemScopeService implements SystemScopeService {
 		} else {
 			return new LinkedHashSet<String>(Collections2.filter(Collections2.transform(scope, systemScopeToString), Predicates.notNull()));
 		}
+	}
+
+	@Override
+	public String baseScope(String value) {
+
+		String[] scopeParts = Iterables.toArray(
+								Splitter.on(":").split(value), 
+								String.class);
+		
+		if (scopeParts.length == 2) {
+			String baseScope = scopeParts[0];
+			SystemScope s = repository.getByValue(baseScope);
+			if (s != null && s.isStructured()) {
+				return baseScope;
+			}			
+		}
+		
+		return value;
 	}
 
 

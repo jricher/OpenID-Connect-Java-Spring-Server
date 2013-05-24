@@ -64,5 +64,7 @@ public interface SystemScopeService {
 	 * @return
 	 */
 	public Set<String> toStrings(Set<SystemScope> scope);
+	
+	public String baseScope(String value);
 
 }

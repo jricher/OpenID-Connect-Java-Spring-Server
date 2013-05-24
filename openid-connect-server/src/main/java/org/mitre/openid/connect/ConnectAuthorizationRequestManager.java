@@ -19,6 +19,7 @@ package org.mitre.openid.connect;
 import java.text.ParseException;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -29,6 +30,7 @@ import org.mitre.jwt.signer.service.impl.JWKSetSigningAndValidationServiceCacheS
 import org.mitre.oauth2.exception.NonceReuseException;
 import org.mitre.oauth2.model.ClientDetailsEntity;
 import org.mitre.oauth2.service.ClientDetailsEntityService;
+import org.mitre.oauth2.service.SystemScopeService;
 import org.mitre.openid.connect.model.Nonce;
 import org.mitre.openid.connect.service.NonceService;
 import org.slf4j.Logger;
@@ -46,7 +48,10 @@ import org.springframework.security.oauth2.provider.ClientDetails;
 import org.springframework.security.oauth2.provider.DefaultAuthorizationRequest;
 import org.springframework.stereotype.Component;
 
+import com.google.common.base.Joiner;
+import com.google.common.base.Splitter;
 import com.google.common.base.Strings;
+import com.google.common.collect.Iterables;
 import com.nimbusds.jose.util.JSONObjectUtils;
 import com.nimbusds.jwt.SignedJWT;
 
@@ -63,6 +68,9 @@ public class ConnectAuthorizationRequestManager implements AuthorizationRequestM
 
 	@Autowired
 	private JWKSetSigningAndValidationServiceCacheService validators;
+
+	@Autowired
+	private SystemScopeService systemScopes;
 
 	/**
 	 * Constructor with arguments
@@ -243,7 +251,9 @@ public class ConnectAuthorizationRequestManager implements AuthorizationRequestM
 			if (clientDetails.isScoped()) {
 				Set<String> validScope = clientDetails.getScope();
 				for (String scope : OAuth2Utils.parseParameterList(parameters.get("scope"))) {
-					if (!validScope.contains(scope)) {
+					
+					String baseScope = systemScopes.baseScope(scope);
+					if (!validScope.contains(baseScope)) {	
 						throw new InvalidScopeException("Invalid scope: " + scope, validScope);
 					}
 				}

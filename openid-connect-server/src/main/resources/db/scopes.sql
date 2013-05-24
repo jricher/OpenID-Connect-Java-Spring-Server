@@ -16,7 +16,8 @@ INSERT INTO system_scope_TEMP (scope, description, icon, allow_dyn_reg, default_
   ('email', 'email address', 'envelope', true, true, false),
   ('address', 'physical address', 'home', true, true, false),
   ('phone', 'telephone number', 'bell', true, true, false),
-  ('offline_access', 'offline access', 'time', true, true, false);
+  ('search', 'BB+ Document Search', 'bell', true, true, true),
+  ('summary', 'BB+ Clinical Summary', 'bell', true, true, true);
   
 
 --

@@ -22,6 +22,7 @@ import java.util.Date;
 import java.util.Map;
 import java.util.Set;
 
+import org.mitre.oauth2.service.SystemScopeService;
 import org.mitre.openid.connect.model.ApprovedSite;
 import org.mitre.openid.connect.model.WhitelistedSite;
 import org.mitre.openid.connect.service.ApprovedSiteService;
@@ -35,7 +36,9 @@ import org.springframework.security.oauth2.provider.DefaultAuthorizationRequest;
 import org.springframework.security.oauth2.provider.approval.UserApprovalHandler;
 import org.springframework.stereotype.Component;
 
+import com.google.common.base.Splitter;
 import com.google.common.base.Strings;
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Sets;
 
 /**
@@ -65,6 +68,8 @@ public class TofuUserApprovalHandler implements UserApprovalHandler {
 	@Autowired
 	private ClientDetailsService clientDetailsService;
 
+	@Autowired
+	private SystemScopeService systemScopes;
 
 	/**
 	 * Check if the user has already stored a positive approval decision for this site; or if the
@@ -190,11 +195,13 @@ public class TofuUserApprovalHandler implements UserApprovalHandler {
 					//registered allowed scopes.
 
 					String scope = approvalParams.get(key);
+					String baseScope = systemScopes.baseScope(scope);
 
 					//Make sure this scope is allowed for the given client
-					if (client.getScope().contains(scope)) {
+					if (client.getScope().contains(baseScope)) {
 						allowedScopes.add(scope);
 					}
+					
 				}
 			}
 
