@@ -51,9 +51,6 @@ import com.google.gson.GsonBuilder;
 @Controller
 public class SearchEndpoint {
 
-    @Value("#{bbProperties['baseUrl']}/api/bb/documents/")
-    private String baseUrl;
-    
 	@Autowired private ApplicationContext applicationContext;
 
 	@Autowired
@@ -70,6 +67,8 @@ public class SearchEndpoint {
 
 	@RequestMapping(value="/api/bb/search", method = RequestMethod.GET, produces = "application/json")
 	public @ResponseBody String search() throws IOException {
+		
+		String baseUrl = Utilities.getBaseUrl() + "api/bb/documents/";
 		
 		Collection<DocumentReference> docs = new ArrayList<DocumentReference>();
 		
@@ -96,7 +95,7 @@ public class SearchEndpoint {
 		return documentFactory.fromId(id);
 	}
 	
-	@RequestMapping(value="/api/bb/summary", method = RequestMethod.GET, produces = "application/json")
+	@RequestMapping(value="/api/bb/summary", method = RequestMethod.GET, produces = "application/xml")
 	public @ResponseBody String summary() throws IOException {
 		return documentFactory.fromId(1);
 	}	

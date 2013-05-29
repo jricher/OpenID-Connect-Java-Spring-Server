@@ -40,7 +40,6 @@
 	<!-- Scan for components -->
 	<context:component-scan annotation-config="true" base-package="org.mitre, org.bbplus" />
 
-	<util:properties id="bbProperties" location="classpath:bb.properties" />
 
 	<!-- Scan for repository interfaces -->
 	<jpa:repositories base-package="org.mitre.openid.connect.repository" />
@@ -200,7 +199,7 @@
 	</security:authentication-manager>
 	
 	<bean id="clientAssertionAuthenticationProvider" class="org.mitre.openid.connect.assertion.JwtBearerAuthenticationProvider" />
-	<bean id="bbUtilties" class="org.bbplus.Utilities" />
+
 	<bean id="documentFactory" class="org.bbplus.DocumentFactory" />
 	<bean id="documentReferenceFactory" class="org.bbplus.DocumentReferenceFactory" />
 	<bean id="documentReferenceFeedFactory" class="org.bbplus.DocumentReferenceFeedFactory" />
@@ -259,6 +258,21 @@
 		<property name="order" value="1" />
 	</bean>
 
+	<import resource="local-config.xml" />
+
+	<beans profile="default">
+		<bean id="bbUtilties" class="org.bbplus.Utilities">
+			<property name="baseUrl" value="http://localhost:8080/openid-connect-server/" />
+		</bean>
+        </beans>
+
+	<beans profile="cloud">
+		<bean id="bbUtilties" class="org.bbplus.Utilities">
+			<property name="baseUrl" value="LOOKUP" />
+		</bean>
+        </beans>
+
+
 	<!-- End view configuration -->
 
 	<!-- scheduled tasks -->
@@ -267,6 +281,5 @@
 	<!-- <task:annotation-driven scheduler="taskScheduler" executor="taskExecutor" /> -->
 
 	<!-- import application-local configuration information (such as bean definitions) -->
-	<import resource="local-config.xml" />
 
 </beans>

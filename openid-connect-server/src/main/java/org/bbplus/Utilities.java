@@ -10,6 +10,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
@@ -22,6 +23,9 @@ import com.google.gson.JsonParser;
 
 public class Utilities {
 	private static String bbPath = "/WEB-INF/classes/blue_button_plus/";
+	
+	private static String baseUrl;
+	
 	public static DateFormat iso8601 =  new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'");
 	
 	@Autowired private ApplicationContext applicationContext;
@@ -97,6 +101,16 @@ public class Utilities {
 		JsonObject templateObject = (JsonObject) new JsonParser().parse(reader);
 		return templateObject;
 		
+	}
+
+	public static String getBaseUrl() {
+		String ret = java.lang.System.getenv("baseUrl");
+		if (ret != null) return ret;
+		return baseUrl;
+	}
+
+	public static void setBaseUrl(String baseUrl) {
+		Utilities.baseUrl = baseUrl;
 	}
 
 }
