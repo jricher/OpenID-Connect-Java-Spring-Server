@@ -1,0 +1,31 @@
+{"DocumentReference": {
+  "created": {"value": "{{created}}"},
+  "indexed": {"value": "{{indexed}}"},
+  "location": {"value": "{{location}}"},
+  
+  "status": {"value": "current"},
+  "type" : {
+    "coding" : [{
+        "code" : {
+          "value" : "Consult"
+        },
+        "display" : {
+          "value" : "Consultation Note"
+        }
+    }]
+  },
+  "description": {"value": "Clinical Summary Note"},
+  "mimeType": {"value": "application/xml"},
+  "conformsTo" : {
+    "coding" : [
+      {
+        "code" : {
+          "value" : "CCDA"
+        },
+        "display" : {
+          "value" : "Consolidated CDA"
+        }
+      }
+    ]
+  }
+}}

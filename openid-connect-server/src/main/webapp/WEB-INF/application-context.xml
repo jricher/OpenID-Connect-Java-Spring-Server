@@ -24,6 +24,8 @@
 	xmlns:task="http://www.springframework.org/schema/task" 
 	xmlns:oauth="http://www.springframework.org/schema/security/oauth2"
 	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xmlns:util="http://www.springframework.org/schema/util" 
+
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
 		http://www.springframework.org/schema/security/oauth2 http://www.springframework.org/schema/security/spring-security-oauth2-1.0.xsd
 		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.1.xsd
@@ -32,11 +34,13 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
 		http://www.springframework.org/schema/data/jpa
-		http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
+		http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 
 	<!-- Scan for components -->
-	<context:component-scan annotation-config="true" base-package="org.mitre" />
+	<context:component-scan annotation-config="true" base-package="org.mitre, org.bbplus" />
 
+	<util:properties id="bbProperties" location="classpath:bb.properties" />
 
 	<!-- Scan for repository interfaces -->
 	<jpa:repositories base-package="org.mitre.openid.connect.repository" />
@@ -196,6 +200,10 @@
 	</security:authentication-manager>
 	
 	<bean id="clientAssertionAuthenticationProvider" class="org.mitre.openid.connect.assertion.JwtBearerAuthenticationProvider" />
+	<bean id="bbUtilties" class="org.bbplus.Utilities" />
+	<bean id="documentFactory" class="org.bbplus.DocumentFactory" />
+	<bean id="documentReferenceFactory" class="org.bbplus.DocumentReferenceFactory" />
+	<bean id="documentReferenceFeedFactory" class="org.bbplus.DocumentReferenceFeedFactory" />
 	
 	<!-- user services -->
 	<import resource="user-context.xml" />
