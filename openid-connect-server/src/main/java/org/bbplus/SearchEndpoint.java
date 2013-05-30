@@ -25,12 +25,14 @@ import javax.xml.xpath.XPathExpressionException;
 
 import org.bbplus.DocumentReferenceFactory.DocumentReference;
 import org.bbplus.DocumentReferenceFeedFactory.DocumentReferenceFeed;
+import org.mitre.openid.connect.config.ConfigurationPropertiesBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -48,6 +50,13 @@ import java.util.regex.Pattern;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+//TODO define an interface for each of the three BB API endpoints
+// Rather than the hard-coded implementation below...
+
+//1.  (User, structured scope) --> Summary Document XML content (String)
+//2.  (User, structured scope, search params) --> DocumentReference Feed (JSON / Atom)
+//3.  (User, structured scope, document ID) --> Document XML content (String)
+
 @Controller
 public class SearchEndpoint {
 
@@ -64,11 +73,24 @@ public class SearchEndpoint {
 	
 	@Autowired
 	private Utilities bbUtilities;	
+	
+	@Autowired
+	private ConfigurationPropertiesBean config;
 
+	// The built-in Spring expressions don't handle structured scopes...
+	// This is a lightweight stopgap; relies on passing in the authentication object
+	@PreAuthorize("hasRole('ROLE_USER') and @bbPermissions.summary(authentication)")
+	@RequestMapping(value="/api/bb/summary", method = RequestMethod.GET, produces = "application/xml")
+	public @ResponseBody String summary() throws IOException {
+		return documentFactory.fromId(1);
+	}
+
+	
+	@PreAuthorize("hasRole('ROLE_USER') and @bbPermissions.search(authentication)")
 	@RequestMapping(value="/api/bb/search", method = RequestMethod.GET, produces = "application/json")
 	public @ResponseBody String search() throws IOException {
 		
-		String baseUrl = Utilities.getBaseUrl() + "api/bb/documents/";
+		String baseUrl = config.getIssuer() + "api/bb/documents/";
 		
 		Collection<DocumentReference> docs = new ArrayList<DocumentReference>();
 		
@@ -89,15 +111,11 @@ public class SearchEndpoint {
 		return gson.toJson(feed.toJson());
 	}
 	
+	@PreAuthorize("hasRole('ROLE_USER') and @bbPermissions.search(authentication)")
 	@RequestMapping(value="/api/bb/documents/{documentId}", method = RequestMethod.GET, produces = "application/xml")
 	public @ResponseBody String retrieve(@PathVariable("documentId") long id) {
 		
 		return documentFactory.fromId(id);
 	}
 	
-	@RequestMapping(value="/api/bb/summary", method = RequestMethod.GET, produces = "application/xml")
-	public @ResponseBody String summary() throws IOException {
-		return documentFactory.fromId(1);
-	}	
-
 }

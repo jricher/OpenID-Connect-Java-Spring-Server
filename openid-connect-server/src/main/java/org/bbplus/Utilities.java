@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.mitre.openid.connect.config.ConfigurationPropertiesBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
@@ -24,11 +25,10 @@ import com.google.gson.JsonParser;
 public class Utilities {
 	private static String bbPath = "/WEB-INF/classes/blue_button_plus/";
 	
-	private static String baseUrl;
-	
 	public static DateFormat iso8601 =  new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'");
 	
 	@Autowired private ApplicationContext applicationContext;
+	@Autowired private ConfigurationPropertiesBean config;
 
 
 	public Resource[] sampleFiles() throws IOException{
@@ -101,16 +101,6 @@ public class Utilities {
 		JsonObject templateObject = (JsonObject) new JsonParser().parse(reader);
 		return templateObject;
 		
-	}
-
-	public static String getBaseUrl() {
-		String ret = java.lang.System.getenv("baseUrl");
-		if (ret != null) return ret;
-		return baseUrl;
-	}
-
-	public static void setBaseUrl(String baseUrl) {
-		Utilities.baseUrl = baseUrl;
 	}
 
 }

@@ -51,13 +51,13 @@ public class UserInfoEndpoint {
 	@PreAuthorize("hasRole('ROLE_USER') and #oauth2.hasScope('openid')")
 	@RequestMapping(value="/userinfo", method= {RequestMethod.GET, RequestMethod.POST}, produces = "application/json")
 	public String getInfo(Principal p, Model model) {
-
+		
 		if (p == null) {
 			logger.error("getInfo failed; no principal. Requester is not authorized.");
 			model.addAttribute("code", HttpStatus.FORBIDDEN);
 			return "httpCodeView";
 		}
-
+		
 		String userId = p.getName();
 		UserInfo userInfo = userInfoService.getBySubject(userId);
 

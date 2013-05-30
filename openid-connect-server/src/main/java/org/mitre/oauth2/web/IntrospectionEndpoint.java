@@ -100,7 +100,7 @@ public class IntrospectionEndpoint {
 					
 					boolean scopesConsistent = true;
 					for (String ts : token.getScope()){
-						if (!authClient.getScope().contains(scopeService.baseScope(ts))){
+						if (!authClient.getScope().contains(scopeService.baseScopeString(ts))){
 							scopesConsistent = false;
 							break;
 						}						

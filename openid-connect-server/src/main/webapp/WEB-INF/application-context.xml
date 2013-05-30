@@ -200,9 +200,11 @@
 	
 	<bean id="clientAssertionAuthenticationProvider" class="org.mitre.openid.connect.assertion.JwtBearerAuthenticationProvider" />
 
+	<bean id="bbPermissions" class="org.bbplus.BBPermissions" />
 	<bean id="documentFactory" class="org.bbplus.DocumentFactory" />
 	<bean id="documentReferenceFactory" class="org.bbplus.DocumentReferenceFactory" />
 	<bean id="documentReferenceFeedFactory" class="org.bbplus.DocumentReferenceFeedFactory" />
+	<bean id="bbUtilties" class="org.bbplus.Utilities" />
 	
 	<!-- user services -->
 	<import resource="user-context.xml" />
@@ -259,18 +261,6 @@
 	</bean>
 
 	<import resource="local-config.xml" />
-
-	<beans profile="default">
-		<bean id="bbUtilties" class="org.bbplus.Utilities">
-			<property name="baseUrl" value="http://localhost:8080/openid-connect-server/" />
-		</bean>
-        </beans>
-
-	<beans profile="cloud">
-		<bean id="bbUtilties" class="org.bbplus.Utilities">
-			<property name="baseUrl" value="LOOKUP" />
-		</bean>
-        </beans>
 
 
 	<!-- End view configuration -->

@@ -22,6 +22,7 @@ import java.util.Date;
 import java.util.Map;
 import java.util.Set;
 
+import org.mitre.oauth2.model.SystemScope;
 import org.mitre.oauth2.service.SystemScopeService;
 import org.mitre.openid.connect.model.ApprovedSite;
 import org.mitre.openid.connect.model.WhitelistedSite;
@@ -173,7 +174,7 @@ public class TofuUserApprovalHandler implements UserApprovalHandler {
 				return ar;
 			}
 		}
-
+		
 		// This must be re-parsed here because SECOAUTH forces us to call things in a strange order
 		boolean approved = Boolean.parseBoolean(authorizationRequest.getApprovalParameters().get("user_oauth_approval"));
 
@@ -195,11 +196,19 @@ public class TofuUserApprovalHandler implements UserApprovalHandler {
 					//registered allowed scopes.
 
 					String scope = approvalParams.get(key);
-					String baseScope = systemScopes.baseScope(scope);
+					String baseScope = systemScopes.baseScopeString(scope);
+					SystemScope structured = systemScopes.toStructuredScope(scope);
 
 					//Make sure this scope is allowed for the given client
 					if (client.getScope().contains(baseScope)) {
-						allowedScopes.add(scope);
+						// If it's structured, assign the user-specified parameter
+						if (structured  != null){
+							String paramValue = approvalParams.get("scopeparam_" + scope);
+							allowedScopes.add(scope + ":"+paramValue);
+						// .. and if it's unstructured, we're all set
+						} else {
+							allowedScopes.add(scope);
+						}
 					}
 					
 				}

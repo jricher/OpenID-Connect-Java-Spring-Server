@@ -52,7 +52,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.google.common.collect.Sets;
 
 @Controller
-@RequestMapping(value = "register")
+@RequestMapping(value = "/register")
 public class ClientDynamicRegistrationEndpoint {
 
 	@Autowired

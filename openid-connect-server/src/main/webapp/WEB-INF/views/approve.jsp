@@ -51,7 +51,7 @@
                             <c:out value="${client.clientName}"/>
                         </c:otherwise>
                     </c:choose>" 
-                to sign you into their site using your identity?
+					to access the requested resources?
 	                <c:if test="${not empty client.clientDescription}">
 	                    <div>
 	                    	<a class="small" href="#" onclick="$('#description').toggle('fast'); return false;"><i class="icon-chevron-right"></i> more information</a>
@@ -75,10 +75,12 @@
 						<c:forEach var="scope" items="${ scopes }">
 						
 							<label for="scope_${ scope.value }" class="checkbox">
+							
 								<input type="checkbox" name="scope_${ scope.value }" id="scope_${ scope.value }" value="${ scope.value }" checked="checked">
 								<c:if test="${ not empty scope.icon }">
 									<i class="icon-${ scope.icon }"></i>
 								</c:if>
+									
 								<c:choose>
 									<c:when test="${ not empty scope.description }">
 										${ scope.description }
@@ -87,7 +89,12 @@
 										${ scope.value }
 									</c:otherwise>
 								</c:choose>
+								
 							</label>
+								<c:if test="${ scope.structured }">
+									<input name="scopeparam_${ scope.value }" type="text" value="${proposedParams[scope.value]}" placeholder="${scope.structuredParamDescription}">
+								</c:if>
+
 						
 						</c:forEach>
 

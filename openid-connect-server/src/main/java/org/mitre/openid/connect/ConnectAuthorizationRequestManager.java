@@ -252,7 +252,7 @@ public class ConnectAuthorizationRequestManager implements AuthorizationRequestM
 				Set<String> validScope = clientDetails.getScope();
 				for (String scope : OAuth2Utils.parseParameterList(parameters.get("scope"))) {
 					
-					String baseScope = systemScopes.baseScope(scope);
+					String baseScope = systemScopes.baseScopeString(scope);
 					if (!validScope.contains(baseScope)) {	
 						throw new InvalidScopeException("Invalid scope: " + scope, validScope);
 					}

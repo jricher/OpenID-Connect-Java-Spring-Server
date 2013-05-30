@@ -15,7 +15,8 @@ INSERT INTO client_details_TEMP (client_id, client_secret, client_name, dynamica
 
 INSERT INTO client_scope_TEMP (owner_id, scope) VALUES
 	('client', 'summary'),
-	('client', 'search');
+	('client', 'search'),
+	('client', 'phone');
 
 INSERT INTO client_redirect_uri_TEMP (owner_id, redirect_uri) VALUES
 	('client', 'http://localhost/'),
