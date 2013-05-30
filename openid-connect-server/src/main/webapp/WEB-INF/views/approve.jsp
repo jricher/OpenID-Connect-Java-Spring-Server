@@ -19,7 +19,7 @@
     <c:remove scope="session" var="SPRING_SECURITY_LAST_EXCEPTION"/>
 
     <div class="well" style="text-align:center">
-        <h1>Approve New Site</h1>
+        <h1>Approve a BlueButton App</h1>
 
         <form name="confirmationForm" action="<%=request.getContextPath()%>/authorize" method="post">
 
