@@ -18,7 +18,7 @@ public class BBTrustedRegistrationValidator implements TrustedRegistrationValida
 		JsonObject regRequest = (JsonObject) new JsonParser().parse(postBody);
 		
 		// BlueButton permits open registration, so no auth = A-OK.
-		if (!auth.isAuthenticated())
+		if (auth  == null || !auth.isAuthenticated())
 			return;
 		
 		JsonObject bbClient = ((PreregistrationToken) auth).getClientDefinitionFromTrustedRegistry();
