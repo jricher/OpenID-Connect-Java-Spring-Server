@@ -22,6 +22,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.http.client.utils.URIUtils;
 import org.apache.http.client.utils.URLEncodedUtils;
+import org.bbplus.TrustedRegistrationValidator;
 import org.mitre.oauth2.model.ClientDetailsEntity;
 import org.mitre.oauth2.model.ClientDetailsEntity.AuthMethod;
 import org.mitre.oauth2.model.OAuth2AccessTokenEntity;
@@ -37,8 +38,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.provider.DefaultAuthorizationRequest;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationDetails;
@@ -67,6 +70,9 @@ public class ClientDynamicRegistrationEndpoint {
 	@Autowired
 	private ConfigurationPropertiesBean config;
 
+	@Autowired
+	private TrustedRegistrationValidator validateTrustedRegistration;
+
 	private static Logger logger = LoggerFactory.getLogger(ClientDynamicRegistrationEndpoint.class);
 
 	/**
@@ -77,7 +83,9 @@ public class ClientDynamicRegistrationEndpoint {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
-	public String registerNewClient(@RequestBody String jsonString, Model m) {
+	public String registerNewClient(@RequestBody String jsonString, Model m, Authentication a) {
+
+		validateTrustedRegistration.validate(jsonString, a);
 
 		ClientDetailsEntity newClient = ClientDetailsEntityJsonProcessor.parse(jsonString);
 
