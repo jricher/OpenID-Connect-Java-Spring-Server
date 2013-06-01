@@ -6,7 +6,6 @@
 <head>
 
     <c:set var="url">${pageContext.request.requestURL}</c:set>
-    <base href="${fn:substring(url, 0, fn:length(url) - fn:length(pageContext.request.requestURI))}${pageContext.request.contextPath}/" />
 
     <meta charset="utf-8">
     <title>${config.topbarTitle} - ${title}</title>

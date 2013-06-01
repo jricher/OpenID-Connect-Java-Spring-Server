@@ -30,6 +30,7 @@ import org.springframework.security.oauth2.provider.DefaultAuthorizationRequest;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 
 import com.google.gson.JsonObject;
+import com.nimbusds.jwt.SignedJWT;
 
 /**
  * @author Josh Mandel
@@ -38,6 +39,7 @@ import com.google.gson.JsonObject;
 public class PreregistrationToken extends OAuth2Authentication {
 
 	private JsonObject clientDefinitionFromTrustedRegistry;
+	private SignedJWT jwt;
 	
 	public PreregistrationToken(AuthorizationRequest authorizationRequest,
 			Authentication userAuthentication) {
@@ -68,6 +70,14 @@ public class PreregistrationToken extends OAuth2Authentication {
 	public void setClientDefinitionFromTrustedRegistry(
 			JsonObject clientDefinitionFromTrustedRegistry) {
 		this.clientDefinitionFromTrustedRegistry = clientDefinitionFromTrustedRegistry;
+	}
+
+	public SignedJWT getJwt() {
+		return jwt;
+	}
+
+	public void setJwt(SignedJWT jwt) {
+		this.jwt = jwt;
 	}
 
 

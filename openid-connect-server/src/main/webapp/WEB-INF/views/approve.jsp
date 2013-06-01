@@ -27,14 +27,20 @@
                 <div class="span4 offset2 well-small" style="text-align:left">
                 
                 <%-- TODO: wire up to stats engine and customize display of this block --%>
-                <c:if test="${ client.dynamicallyRegistered }">
+               <c:if test="${ client.dynamicallyRegistered  and not client.trustedRegistration}">
 			    <div class="alert alert-block alert-info">
 			        <h4><i class="icon-globe"></i> Caution:</h4>
 			        This client was dynamically registered and has very few
 			        other users on this system.
 			    </div>
-			    </c:if>
-
+	        </c:if>
+		<c:if test="${ client.dynamicallyRegistered and client.trustedRegistration }">
+			    <div class="alert alert-block alert-info">
+			        <h4><i class="icon-globe"></i> Caution:</h4>
+				This client was dynamically registered <em>via a trusted process</em>.
+			    </div>
+	        </c:if>
+ 
            		<c:if test="${ not empty client.logoUri }">
            			<ul class="thumbnails">
            				<li class="span4">

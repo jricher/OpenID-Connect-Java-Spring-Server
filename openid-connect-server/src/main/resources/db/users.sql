@@ -11,6 +11,7 @@ START TRANSACTION;
 -- 
 
 INSERT INTO trusted_registry_TEMP (uri) VALUES
+  ('https://bbplus-static-registry.aws.af.cm'),
   ('http://blue-button.github.com/static-registry-example');
  
 INSERT INTO users_TEMP (username, password, enabled) VALUES

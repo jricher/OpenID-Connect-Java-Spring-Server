@@ -98,7 +98,8 @@ public class PreregistrationAuthenticationProvider implements AuthenticationProv
 			throw new AuthenticationServiceException("Invalid signature");
 		}
 		
-		String appsRaw = restTemplate.getForObject(registryUrl+"/.well-known/bb/apps.json", String.class);
+		String appsUrl = registryUrl+"/.well-known/bb/apps.json";
+		String appsRaw = restTemplate.getForObject(appsUrl, String.class);
 		JsonArray apps = (JsonArray) new JsonParser().parse(appsRaw);
 
 		JsonObject client = null;
@@ -110,13 +111,14 @@ public class PreregistrationAuthenticationProvider implements AuthenticationProv
 		}
 		
 		if (client == null){
-			throw new AuthenticationServiceException("App "+appUrl+" not found in registry's apps.json");
+			throw new AuthenticationServiceException("App "+appUrl+" not found at " + appsUrl);
 		}
 		
 		client.addProperty("augmented", true);
 		
 		logger.debug(client.toString());
 		PreregistrationToken ret = new PreregistrationToken(appUrl,	client, true);
+		ret.setJwt(parsed);
 		
 		return ret;
 	}

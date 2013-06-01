@@ -23,7 +23,6 @@ import java.util.concurrent.ExecutionException;
 
 import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.mitre.oauth2.model.ClientDetailsEntity;
 import org.mitre.oauth2.model.RegisteredClient;
 import org.mitre.openid.connect.ClientDetailsEntityJsonProcessor;
 import org.mitre.openid.connect.client.service.ClientConfigurationService;

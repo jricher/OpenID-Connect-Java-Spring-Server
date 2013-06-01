@@ -85,7 +85,7 @@ public class ClientDynamicRegistrationEndpoint {
 	@RequestMapping(method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
 	public String registerNewClient(@RequestBody String jsonString, Model m, Authentication a) {
 
-		validateTrustedRegistration.validate(jsonString, a);
+		boolean trustedRegistration = validateTrustedRegistration.validate(jsonString, a);
 
 		ClientDetailsEntity newClient = ClientDetailsEntityJsonProcessor.parse(jsonString);
 
@@ -152,6 +152,10 @@ public class ClientDynamicRegistrationEndpoint {
 
 			// this client has been dynamically registered (obviously)
 			newClient.setDynamicallyRegistered(true);
+			
+			if (trustedRegistration){
+				newClient.setTrustedRegistration(trustedRegistration);
+			}
 
 			// now save it
 			ClientDetailsEntity savedClient = clientService.saveNewClient(newClient);

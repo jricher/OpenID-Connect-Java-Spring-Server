@@ -14,8 +14,8 @@ public class DefaultTrustedRegistrationValidator implements TrustedRegistrationV
 
 	// Happy validator doesn't care about trusted registration and always approves.
 	@Override
-	public void validate(String postBody, Authentication auth) {
-		return;
+	public boolean validate(String postBody, Authentication auth) {
+		return false;
 	}
 
 }

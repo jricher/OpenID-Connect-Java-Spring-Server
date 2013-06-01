@@ -42,7 +42,7 @@
 
 
 	<!-- Scan for repository interfaces -->
-	<jpa:repositories base-package="org.mitre.openid.connect.repository" />
+	<jpa:repositories base-package="org.bbplus" />
 
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<tx:annotation-driven transaction-manager="transactionManager" />
@@ -235,7 +235,7 @@
 	</bean>
 
 	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-		<property name="packagesToScan" value="org.mitre" />
+		<property name="packagesToScan" value="org.mitre, org.bbplus" />
 		<property name="persistenceProviderClass" value="org.eclipse.persistence.jpa.PersistenceProvider" />
 		<property name="dataSource" ref="dataSource" />
 		<property name="jpaVendorAdapter" ref="jpaAdapter" />
