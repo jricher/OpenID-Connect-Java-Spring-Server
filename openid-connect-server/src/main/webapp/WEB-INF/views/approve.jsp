@@ -35,8 +35,8 @@
 			    </div>
 	        </c:if>
 		<c:if test="${ client.dynamicallyRegistered and client.trustedRegistration }">
-			    <div class="alert alert-block alert-info">
-			        <h4><i class="icon-globe"></i> Caution:</h4>
+			    <div class="alert alert-block alert-success">
+			        <h4><i class="icon-globe"></i> Note:</h4>
 				This client was dynamically registered <em>via a trusted process</em>.
 			    </div>
 	        </c:if>
