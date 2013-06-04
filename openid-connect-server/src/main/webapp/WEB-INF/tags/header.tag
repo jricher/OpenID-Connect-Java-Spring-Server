@@ -5,7 +5,7 @@
 <html lang="en">
 <head>
 
-    <c:set var="url">${pageContext.request.requestURL}</c:set>
+    <base href="${config.issuer}">
 
     <meta charset="utf-8">
     <title>${config.topbarTitle} - ${title}</title>
