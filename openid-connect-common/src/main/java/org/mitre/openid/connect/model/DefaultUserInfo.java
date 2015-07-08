@@ -75,6 +75,7 @@ public class DefaultUserInfo implements UserInfo {
 	private Address address;
 	private String updatedTime;
 	private String birthdate;
+	private String eyeColor;
 	private transient JsonObject src; // source JSON if this is loaded remotely
 
 
@@ -413,6 +414,23 @@ public class DefaultUserInfo implements UserInfo {
 	@Override
 	public void setBirthdate(String birthdate) {
 		this.birthdate = birthdate;
+	}
+
+/**
+	 * @return the eyeColor
+	 */
+	@Override
+	@Basic
+	@Column(name="eye_color")
+	public String getEyeColor() {
+		return eyeColor;
+	}
+	/**
+	 * @param eyecolor the eyecolor to set
+	 */
+	@Override
+	public void setEyeColor(String eyeColor) {
+		this.eyeColor = eyeColor;
 	}
 
 	@Override

@@ -342,6 +342,7 @@ public class DiscoveryEndpoint {
 				"locale",
 				"updated_time",
 				"birthdate",
+				"eye_color",
 				"email",
 				"email_verified",
 				"phone_number",

@@ -227,6 +227,19 @@ public interface UserInfo extends Serializable {
 	 */
 	public void setBirthdate(String birthdate);
 
+
+/**
+	 * 
+	 * @return
+	 */
+	public String getEyeColor();
+
+	/**
+	 * 
+	 * @param birthdate
+	 */
+	public void setEyeColor(String eyeColor);
+
 	/**
 	 * Serialize this UserInfo object to JSON.
 	 * 
