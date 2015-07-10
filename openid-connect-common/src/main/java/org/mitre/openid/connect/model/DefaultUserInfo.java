@@ -456,6 +456,7 @@ public class DefaultUserInfo implements UserInfo {
 			obj.addProperty("locale", this.getLocale());
 			obj.addProperty("updated_time", this.getUpdatedTime());
 			obj.addProperty("birthdate", this.getBirthdate());
+			obj.addProperty("eye_color", this.getEyeColor());
 	
 			obj.addProperty("email", this.getEmail());
 			obj.addProperty("email_verified", this.getEmailVerified());

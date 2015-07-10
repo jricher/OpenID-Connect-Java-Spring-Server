@@ -21,9 +21,9 @@ INSERT INTO authorities_TEMP (username, authority) VALUES
   ('user','ROLE_USER');
     
 -- By default, the username column here has to match the username column in the users table, above
-INSERT INTO user_info_TEMP (sub, preferred_username, name, email, email_verified) VALUES
-  ('90342.ASDFJWFA','admin','Demo Admin','admin@example.com', true),
-  ('01921.FLANRJQW','user','Demo User','user@example.com', true);
+INSERT INTO user_info_TEMP (sub, preferred_username, name, email, email_verified, eye_color) VALUES
+  ('90342.ASDFJWFA','admin','Demo Admin','admin@example.com', true, 'purple'),
+  ('01921.FLANRJQW','user','Demo User','user@example.com', true, 'silver');
 
  
 --
@@ -43,10 +43,10 @@ MERGE INTO authorities
     INSERT (username,authority) values (vals.username, vals.authority);
 
 MERGE INTO user_info 
-  USING (SELECT sub, preferred_username, name, email, email_verified FROM user_info_TEMP) AS vals(sub, preferred_username, name, email, email_verified)
+  USING (SELECT sub, preferred_username, name, email, email_verified, eye_color FROM user_info_TEMP) AS vals(sub, preferred_username, name, email, email_verified, eye_color)
   ON vals.preferred_username = user_info.preferred_username
   WHEN NOT MATCHED THEN 
-    INSERT (sub, preferred_username, name, email, email_verified) VALUES (vals.sub, vals.preferred_username, vals.name, vals.email, vals.email_verified);
+    INSERT (sub, preferred_username, name, email, email_verified, eye_color) VALUES (vals.sub, vals.preferred_username, vals.name, vals.email, vals.email_verified, eye_color);
 
     
 -- 
